@@ -4,7 +4,7 @@
 table = sortrows(readtable("Heathrow.xlsx"), "Year");
 
 % Needed to split data later
-idx_1973 = find(table.Year == 1979);
+idx_1973 = find(table.Year == 1973);
 
 % For first 9 data columns
 for i = 2:10
