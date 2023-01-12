@@ -7,19 +7,20 @@ close all;
 
 file = "Heathrow.xlsx";
 
-if  exist( file , 'file') == 2 
-        %This means the file exists :).
-        T = readtable(file);
-        Names = T.Properties.VariableNames ;
-        %load(file);
-        fprintf('Loaded the file named : %s \n' , file);    
-        %dataLoaded = true ;
-
-else
+% Make sure the file exists
+if  exist( file , 'file') ~= 2        
         fprintf('\nThe file named : %s does not exist in the current directory' , file);
-        fprintf('\nThe current directory is named : %s ' , pwd);
-        
+        fprintf('\nThe current directory is named : %s \n' , pwd);
+        return        
 end
+
+
+
+T = readtable(file);
+Names = T.Properties.VariableNames ;
+fprintf('Loaded the file named : %s \n' , file);    
+
+
 
 % Iterate over the elements of the cell array
 for i = 1:numel(Names)
