@@ -30,7 +30,9 @@ for i = 1:numel(Names)
     disp(element);
     V = T.Variables ;
     
-    Group1Exe1Fun1( V(:,i) );
+    V_temp = V(~isnan(V(:,i)),i) ;
+    % V(:,i)
+    Group1Exe1Fun1(V_temp );
     %(:,i)
     %break
     %T{element}
