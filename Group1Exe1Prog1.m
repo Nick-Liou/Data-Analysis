@@ -16,8 +16,8 @@ end
 
 
 
-T = readtable(file);
-Names = T.Properties.VariableNames ;
+Table = readtable(file);
+Names = Table.Properties.VariableNames ;
 fprintf('Loaded the file named : %s \n' , file);    
 
 final_p_values = zeros(5,numel(Names)) ;
@@ -28,7 +28,7 @@ for i = 2:numel(Names)
     element = Names{i};
     % Do something with the element
     disp(element);
-    V = T.Variables ;
+    V = Table.Variables ;
     
     V_temp = V(~isnan(V(:,i)),i) ;
     [p_1 , p_2 , discrete ,h_1 , h_2 ] = Group1Exe1Fun1(V_temp );

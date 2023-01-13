@@ -1,5 +1,8 @@
 function [p_parametric, p_bootstrap] = Group1Exe3Fun1(X_Year, X)
-  
+
+    % Liouliakis Nikolaos  AEM: 10058
+    % Panagiotis Syskakis  AEM: 10045
+
     % Find first discontinuity in first vector
     discont = find(diff(X_Year)~=1, 1);
     if(isempty(discont))
@@ -37,6 +40,10 @@ function [p_parametric, p_bootstrap] = Group1Exe3Fun1(X_Year, X)
     min_alpha_half = min( min_alpha_half + zeros_in_stat/2 , B/2) ;
     % Find the p value
     p_bootstrap = min_alpha_half * 2 / B;
+    % Maybe this is wrong !!!!!! and it has to be 1 - p_bootstrap
+    % p_bootstrap = 1 - p_bootstrap
+    
+    % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     
 end
