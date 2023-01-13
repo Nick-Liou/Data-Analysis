@@ -1,11 +1,13 @@
-function [p_1 , p_2] = Group1Exe1Fun1( X )
+function [p_1 , p_2 , discrete ,h_1 , h_2 ] = Group1Exe1Fun1( X )
 
     % Liouliakis Nikolaos  AEM: 10058
     % Panagiotis Syskakis  AEM: 10045
 
-
-    p_1 = -1 ;
-    p_2 = -1 ; %#ok<NASGU>
+    p_1 = NaN ;
+    p_2 = NaN ; %#ok<NASGU>
+    discrete = NaN ;
+    h_1 = NaN ;
+    h_2 = NaN ; 
     % Check input is a vector
     if( ~isvector(X) )
             % Crash
@@ -19,7 +21,7 @@ function [p_1 , p_2] = Group1Exe1Fun1( X )
 
     %[C,ia,ic] = unique(X) ;
 
-    [counts, groupnames] = groupcounts(X)
+    [counts, groupnames] = groupcounts(X);
 
     if( length(groupnames) > 10  )
         %% a
@@ -29,16 +31,20 @@ function [p_1 , p_2] = Group1Exe1Fun1( X )
 
         Emin  = 0 ;                
         % Normal
-        [~,p_normal,~] = chi2gof(X , 'Edges',hist.BinEdges ,'EMin',Emin )  ;                
+        [h_normal,p_normal,~] = chi2gof(X , 'Edges',hist.BinEdges ,'EMin',Emin )  ;                
         % Uniform
         [a,b] = unifit(X);
-        [~, p_uniform ,~] = chi2gof(X, "CDF", {@unifcdf, a, b} ,'Edges',hist.BinEdges ,'EMin',Emin ) ;
+        [h_uniform, p_uniform ,~] = chi2gof(X, "CDF", {@unifcdf, a, b} ,'Edges',hist.BinEdges ,'EMin',Emin ) ;
 
         title_text = sprintf( "p-value for normal: %.3g p-value for uniform %.3g" , p_normal , p_uniform );
         title(title_text);
         
         p_1 = p_normal  ;
         p_2 = p_uniform ;
+        
+        discrete = false ;
+        h_1 = h_normal ;
+        h_2 = h_uniform ; 
                 
     else
         %% b
@@ -48,9 +54,9 @@ function [p_1 , p_2] = Group1Exe1Fun1( X )
         bar(groupnames,counts);
         
         c = 1 ;
-        K = length(counts) ;
-        
+        K = length(counts) ;        
         dof = K - c ; 
+        
         bound_for_statistic  = chi2inv( 0.95 , dof); 
         
         %x = chi2inv(0.95,10)
@@ -82,19 +88,16 @@ function [p_1 , p_2] = Group1Exe1Fun1( X )
         h_uniform = X_squared_stat_uniform > bound_for_statistic ; 
         p_uniform = chi2cdf(X_squared_stat_uniform,dof,'upper');
         
-%         % Uniform
-%         %[a,b] = unifit(X);
-%         a = 0 ; 
-%         b = n ; 
-%         [h, p_uniform ,stat] = chi2gof(X, "CDF", {@unifcdf, a, b} ,'NBins' , length(groupnames)  ,'EMin',0 ) 
-%         %[h, p_uniform ,stat] = chi2gof(X, "CDF", {@unifcdf, a, b} ,'EMin',0 ) 
-
 
         title_text = sprintf( "p-value for Binomial %.3g p-value for Uniform %.3g" , p_binomial , p_uniform );
         title(title_text);
         
         p_1 = p_binomial ;
         p_2 = p_uniform  ;
+        
+        discrete = true ;
+        h_1 = h_binomial ;
+        h_2 = h_uniform ; 
 
     end
         
