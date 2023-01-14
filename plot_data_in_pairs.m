@@ -48,6 +48,7 @@ for i = 1 : length(pairs)
     figure;
     plot(X,Y,"s");
     
+    
     text = sprintf( "Pair %s %s \n" , name1 , name2 );
     title(text);
     

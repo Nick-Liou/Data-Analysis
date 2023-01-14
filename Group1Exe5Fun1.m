@@ -24,14 +24,27 @@ function [ I_XY , p_value_boot , n  ] = Group1Exe5Fun1(X, Y)
     n = length(X) ;
     
   
-    X = X > median(X);
-    Y = Y > median(Y);
+    X = double(X > median(X));
+    Y = double(Y > median(Y));
     
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     X = 100*rand(10,1)-50
+%     
+%      number_of_groups = 5 ;
+%     X = X- min(X); 
+%     X = round( X/max(X)*(number_of_groups-1)) 
+%     
+%     groups_length = 100/ (number_of_groups) ;
+%     prctile(X,[0:groups_length:100])
+%     
+%     grouped_X =  round(X/max(X) * (number_of_groups-1))
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
     I_XY =  Group1Exe5Fun2(X, Y) ;
     
     
-    B = 1000 ;
+    B = 1000;
     mutual_information_values_bootstrap = nan(B,1);
     
     for i=1:B
