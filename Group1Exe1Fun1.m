@@ -24,7 +24,7 @@ function [p_1 , p_2 , discrete ,h_1 , h_2 ] = Group1Exe1Fun1( X )
     [counts, groupnames] = groupcounts(X);
 
     if( length(groupnames) > 10  )
-        %% a
+        % a
         figure('Name','Group1Exe1_histogram');
         hist = histogram(X,'BinMethod','sqrt');
         %hist.BinEdges;
@@ -47,7 +47,7 @@ function [p_1 , p_2 , discrete ,h_1 , h_2 ] = Group1Exe1Fun1( X )
         h_2 = h_uniform ; 
                 
     else
-        %% b
+        % b
 
         figure('Name','Group1Exe1_bar_plot');
 
