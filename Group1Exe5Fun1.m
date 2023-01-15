@@ -71,7 +71,7 @@ function [ I_XY , p_value_boot , n  ] = Group1Exe5Fun1(X, Y)
         X_boot = X(indexes);
         Y_boot = Y;
         
-        % This function must take tow column vectors        
+        % This function must take two column vectors        
         mutual_information_values_bootstrap(i) = Group1Exe5Fun2(X_boot, Y_boot) ;
         
     end
