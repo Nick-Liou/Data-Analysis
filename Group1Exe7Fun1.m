@@ -33,7 +33,7 @@ function [ R_max , best_model_name  ] = Group1Exe7Fun1(X, Y)
     % model 6 : y = a + blog(x)
     % model 7 : y = a + b/x
     
-    number_of_models = 7 ;
+    number_of_models = 8 ;
     f_models = cell(3,number_of_models) ;    
     
     % f_models{1,i} = transform X,Y to correct input for regress
@@ -41,6 +41,7 @@ function [ R_max , best_model_name  ] = Group1Exe7Fun1(X, Y)
     % f_models{3,i} = The model type that the regress will use (in Latex format for the legend)
     
     % Polynomial models
+    
     
     % y = ax + b
     f_models{1,1} = @(X,Y) [Y X ones(length(X),1)];
@@ -80,7 +81,11 @@ function [ R_max , best_model_name  ] = Group1Exe7Fun1(X, Y)
     f_models{2,7} = @(p,X) p(1)./X+p(2) ;
     f_models{3,7} = "$y = a + \frac{b}{x}$" ;
     
-    
+    % Extra the mean 
+    % y = a
+    f_models{1,8} = @(X,Y) [Y ones(length(X),1)];
+    f_models{2,8} = @(p,X) p(1)*ones(length(X),1) ;  
+    f_models{3,8} = "$y = a$" ;
     
     
     p_cell_coefficients = cell(1,number_of_models) ;
@@ -88,9 +93,13 @@ function [ R_max , best_model_name  ] = Group1Exe7Fun1(X, Y)
     % Fit the models to X,Y using 
     for i = 1:number_of_models        
         Y_X_input = f_models{1,i}( X , Y ) ;
+        %Y_X_input = Y_X_input( isfinite(Y_X_input) );  %%%%%%%%%%%%%%
+        Y_X_input(any(isinf(Y_X_input), 2), :) = [];
         Y_input = Y_X_input(:,1);
         X_input = Y_X_input(:,2:end);
         p_cell_coefficients{i} = regress( Y_input, X_input	) ;
+        
+        
         
     end
     
@@ -99,7 +108,9 @@ function [ R_max , best_model_name  ] = Group1Exe7Fun1(X, Y)
     k = cellfun(@length,p_cell_coefficients) - 1 ;
     
     
-    y_tilde = cell2mat( cellfun(@(fh,args)fh(args,X), f_models(2,:), p_cell_coefficients  , 'UniformOutput', false) );
+    y_tilde =  cellfun(@(fh,args)fh(args,X), f_models(2,:), p_cell_coefficients  , 'UniformOutput', false) 
+    
+    y_tilde = cell2mat( y_tilde  )
     adjusted_R_squared = 1 - (n-1)./(n-k-1) .* sum( (Y- y_tilde  ).^2  ) / sum( (Y- mean(Y)  ).^2  );
     
     % Find the best model
