@@ -38,6 +38,24 @@ function [ I_XY , p_value_boot , n  ] = Group1Exe5Fun1(X, Y)
 %     prctile(X,[0:groups_length:100])
 %     
 %     grouped_X =  round(X/max(X) * (number_of_groups-1))
+
+%     X = 2*rand(1000,1)-2;
+%     
+%     X = [ 1 1 1 1 1 1 2 ] ;
+
+%     n_bins = 16 ;
+%     bin_prctile_span = 100/ (n_bins) ;
+%     edgesX = prctile(X,[0:bin_prctile_span:100]);
+%     edgesY = prctile(Y,[0:bin_prctile_span:100]);
+%     X1 = X>median(X);
+%     X2 = discretize(X, edgesX)-1;
+%     Y = discretize(Y, edgesY)-1;
+%     %X2 = discretize(X, edges)-1
+% 
+% 
+%      all(X1 == X2);
+%      
+%      X = X2 ;
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  

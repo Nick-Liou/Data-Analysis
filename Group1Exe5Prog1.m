@@ -27,11 +27,10 @@ pairs = nchoosek(2:10, 2);
 
 fancy_scatter_plots = [ 6     8    15    17    19    20    21    23    26    30    33 ] ;
 
-tic
-for i = 1 : length(pairs) % length(fancy_scatter_plots) 
+
+for i = 1 : length(fancy_scatter_plots) 
     
-    %index_in_pairs = fancy_scatter_plots(i);
-    index_in_pairs = i ; % delete this ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    index_in_pairs = fancy_scatter_plots(i);
     % Access the element at the current index
     temp = pairs(index_in_pairs,:);
     index1 = temp(1);
@@ -46,10 +45,6 @@ for i = 1 : length(pairs) % length(fancy_scatter_plots)
     X = V(:,index1) ; 
     Y = V(:,index2) ;
     
-    %error("delete this");
-    
-%     X = (1:100)' ;
-%     Y = X.^2;
     % Delete NaN
     mask = ~( isnan(X)| isnan(Y) );
     X = X(mask) ;
@@ -72,14 +67,33 @@ for i = 1 : length(pairs) % length(fancy_scatter_plots)
 
     
     
-    %     figure;
-%     plot(X,Y,"s");
-    
+%     figure;
+%     plot(X,Y,"s");    
 %     text = sprintf( "Pair %s %s \n" , name1 , name2 );
 %     title(text);
 
-
-    %break
-    
 end
-toc
+    
+
+
+
+% When the p-values is small the correalation is  significant
+
+% Because most of the p-values for the Mutual Information are small it means that we are confidend
+% about the existance of correlation even tho that correlation is small in value 
+
+% The p-values differ, as the p-values for mutual information are very close to 0.
+% However, the mutual information metric can only detect some very simple non-linear correlations,
+% because of the low discretization resolution.
+
+
+
+
+
+
+
+
+
+
+
+
