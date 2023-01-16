@@ -24,7 +24,6 @@ fprintf('Loaded the file named : %s \n' , file);
 %find(Table.Year == 1973 ) 
 last_years = Table(Table.Year >= 1973 ,:)  ;
 
-last_years.Variables
 
 independent_id = [2:12];
 dependent_id = [10 12] ;
