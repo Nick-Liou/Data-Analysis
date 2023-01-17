@@ -1,4 +1,4 @@
-function [ I_XY , p_value_boot , n  ] = Group1Exe5Fun1(X, Y)
+function [ I_XY , p_value_boot , n  ] = Group1Exe5Fun1(X, Y )
 
     % Liouliakis Nikolaos  AEM: 10058
     % Panagiotis Syskakis  AEM: 10045
@@ -28,6 +28,7 @@ function [ I_XY , p_value_boot , n  ] = Group1Exe5Fun1(X, Y)
     Y = double(Y > median(Y));
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Discritize tests 
 %     X = 100*rand(10,1)-50
 %     
 %      number_of_groups = 5 ;
@@ -65,7 +66,7 @@ function [ I_XY , p_value_boot , n  ] = Group1Exe5Fun1(X, Y)
     B = 1000;
     mutual_information_values_bootstrap = nan(B,1);
     
-    for i=1:B
+    parfor i=1:B
          
         indexes = randperm(length(X))';
         X_boot = X(indexes);
@@ -77,7 +78,7 @@ function [ I_XY , p_value_boot , n  ] = Group1Exe5Fun1(X, Y)
     end
     
     
-    [~, p_value_boot, ~] = Group1Exe3Fun2( mutual_information_values_bootstrap );
+    [~, p_value_boot, ~] = Group1Exe3Fun2( mutual_information_values_bootstrap, I_XY ,  "Tail" , "right" );
     
     
     

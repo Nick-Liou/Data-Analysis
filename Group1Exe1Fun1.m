@@ -3,21 +3,12 @@ function [p_1 , p_2 , discrete ,h_1 , h_2 ] = Group1Exe1Fun1( X )
     % Liouliakis Nikolaos  AEM: 10058
     % Panagiotis Syskakis  AEM: 10045
 
-    p_1 = NaN ;
-    p_2 = NaN ; %#ok<NASGU>
-    discrete = NaN ;
-    h_1 = NaN ;
-    h_2 = NaN ; 
-    % Check input is a vector
-    if( ~isvector(X) )
-            % Crash
-            error("In function Group1Exe1Fun1 input was not a vector");
+    arguments
+        % Make sure it is a row vector   
+        X (:,1)   {mustBeNumeric}
+        
     end
-
-    % Make sure it is a row vector         
-    if( ~iscolumn(X) )
-            X = X';
-    end
+   
 
     %[C,ia,ic] = unique(X) ;
 
@@ -66,12 +57,11 @@ function [p_1 , p_2 , discrete ,h_1 , h_2 ] = Group1Exe1Fun1( X )
 
         % Binomial 
         % Days in a year
-        n = 365 ;  %#ok<NASGU>
+        % n = 365 ;  %#ok<NASGU>
         % Use the seemingly WRONG value for n 
         n = max(X);
         p = mean(X,'omitnan')/ n ;
 
-        y = binopdf(0:n, n,p);
 
         X_squared_stat_binomial = sum( ((counts - length(X)* binopdf(groupnames, n,p) ).^2 ) ./ (length(X)* binopdf(groupnames, n,p) )  ) ;
         

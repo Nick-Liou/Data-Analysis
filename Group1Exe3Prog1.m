@@ -57,7 +57,6 @@ for i = 2:10
        fprintf("!! There is a significant difference of mean values for the metric %s  !! \n", element);
     end
     
-    break
 end
 
 

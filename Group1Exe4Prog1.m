@@ -17,21 +17,18 @@ end
 
 Table = readtable(file);
 Names = Table.Properties.VariableNames ;
-fprintf('Loaded the file named : %s \n' , file);    
-
-
+fprintf('Loaded the file named : %s \n\n' , file);    
 
 
 
 V = Table.Variables ;
 % n choose k all combinations 
 pairs = nchoosek(2:10, 2);
-
-a = 0.05 ;
+alpha = 0.05 ;
 are_they_correlated = NaN(length(pairs) , 6) ;
 
 tic
-for i = 1 : length(pairs) 
+parfor i = 1 : length(pairs) 
     
     % Access the element at the current index
     temp = pairs(i,:);
@@ -42,48 +39,51 @@ for i = 1 : length(pairs)
     
     
     % Do something with the pair    
-    fprintf('Calculating for the Pair %s %s \n' , name1 , name2 );    
+    fprintf('Calculating for the Pair ID %2d  %s\t %s \n' ,i , name1 , name2 );    
     
     X = V(:,index1) ; 
     Y = V(:,index2) ;
     
     
-    [ci_1, p_1, ci_2, p_2 , n] = Group1Exe4Fun1(X,Y);
+    [ci_1, p_1, ci_2, p_2 , n] = Group1Exe4Fun1(X,Y, "Alpha" , alpha);
     
     
     % p > a     =>  r == 0 => oxi sysxetisi 
     % 0 in ci   =>  r == 0 => oxi sysxetisi 
 
     t1 = 0 < ci_1(1) || ci_1(2) < 0 ;
-    t2 = p_1 < a ;
+    t2 = p_1 < alpha ;
     t3 = 0 < ci_2(1) || ci_2(2) < 0 ;
-    t4 = p_2 < a ;
+    t4 = p_2 < alpha ;
     
     
     are_they_correlated( i , :) = [t1 t2 t3 t4 p_1 p_2]' ;
     
     
     
-    
 end
+
+fprintf('\n' );   
 toc
 
 result =  [pairs  are_they_correlated];
 
 % Do the 4 differend ways agree ? 
 
-% Most of the times yes, but not always. (what about the last one ????????????????????????????????????)
+% Most of the times yes, but not always. 
 
 % This is usefull to see that more easily 
 % sum(are_they_correlated(:,1:4)')
 
 
+print_table = array2table([(1:length(pairs))'  are_they_correlated],"VariableNames" , [ "Pair ID" "h fisher ci" "h student" "h bootstrap ci" "h randomization" "p parametric" "p randomization" ] );
+
+disp(print_table);
+
 
 % 3 Pairs most significant correlation for p_1 and p_2
-
-
-
 k = 3 ; 
+
 % We find the indexes for the k smaller p_values 
 [~,indexes_mink_p1] = mink(result(:,7),k);
 [~,indexes_mink_p2] = mink(result(:,8),k);
@@ -122,7 +122,7 @@ end
 
 % Do the Random permutation or randomization test agree ? 
 
-% NO ? ??? ???????????????????????????????????
+% The decisions from the 4 tests mostly agree.
 
 
 

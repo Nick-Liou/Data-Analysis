@@ -60,8 +60,8 @@ function [ adj_R_squared , p_value  ] = Group1Exe8Fun1(X, Y)
     end
     
     
-    [~, p_value, ~] = Group1Exe3Fun2( adj_R_squared_bootstrap , 0.05 , adj_R_squared );
-    
+    %[~, p_value, ~] = Group1Exe3Fun2( adj_R_squared_bootstrap , adj_R_squared );
+    [~, p_value, ~] = Group1Exe3Fun2( adj_R_squared_bootstrap , adj_R_squared , "Tail", "right" );
     
    
     

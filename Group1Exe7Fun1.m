@@ -100,7 +100,6 @@ function [ R_max , best_model_name  ] = Group1Exe7Fun1(X, Y)
         p_cell_coefficients{i} = regress( Y_input, X_input	) ;
         
         
-        
     end
     
     %adjusted_R_squared = 1 ; 
@@ -111,7 +110,7 @@ function [ R_max , best_model_name  ] = Group1Exe7Fun1(X, Y)
     y_tilde =  cellfun(@(fh,args)fh(args,X), f_models(2,:), p_cell_coefficients  , 'UniformOutput', false) ;
     
     y_tilde = cell2mat( y_tilde  );
-    adjusted_R_squared = 1 - (n-1)./(n-k-1) .* sum( (Y- y_tilde  ).^2  ) / sum( (Y- mean(Y)  ).^2  );
+    adjusted_R_squared = 1 - (n-1)./(n-k-1) .* sum( (Y - y_tilde  ).^2  ) / sum( (Y - mean(Y)  ).^2  );
     
     % Find the best model
     [R_max, Index] = max(adjusted_R_squared) ;

@@ -1,4 +1,4 @@
-function [ci_1, p_1, ci_2, p_2 , n] = Group1Exe4Fun1(X, Y)
+function [ci_1, p_1, ci_2, p_2 , n] = Group1Exe4Fun1(X, Y , options)
 
 
     % Liouliakis Nikolaos  AEM: 10058
@@ -9,16 +9,9 @@ function [ci_1, p_1, ci_2, p_2 , n] = Group1Exe4Fun1(X, Y)
         % Make inputs a column vector
         X (:,1)	{mustBeNumeric}
         Y (:,1)	{mustBeNumeric} 
+        options.Alpha  	(1,1)   double  {mustBeNumeric,mustBeGreaterThan(options.Alpha,0),mustBeLessThan(options.Alpha,1)} = 0.05
     end
     
-    
-    ci_1 = NaN;
-    ci_2 = NaN;
-    p_1  = NaN;
-    p_2  = NaN;
-    n    = NaN;
-    
-
     % Check inputs have the same size
     if( length(X) ~= length(Y) )
             % Crash
@@ -26,6 +19,7 @@ function [ci_1, p_1, ci_2, p_2 , n] = Group1Exe4Fun1(X, Y)
     end
     
   
+    a = options.Alpha;
     
     
     % Delete NaN
@@ -43,7 +37,6 @@ function [ci_1, p_1, ci_2, p_2 , n] = Group1Exe4Fun1(X, Y)
     
     z = atanh(r);
     var_z = 1 / (n-3) ;
-    a = 0.05;
     
 
     ci_z = norminv([a/2 ; 1-a/2], z, sqrt(var_z));
@@ -58,8 +51,8 @@ function [ci_1, p_1, ci_2, p_2 , n] = Group1Exe4Fun1(X, Y)
     
     
     % parallel version , faster for big values of B
-    %[ci_r_boot] = bootci(B,{@corr,X,Y},'type','per', 'Options',statset('UseParallel',true));
-    [ci_r_boot] = bootci(B,{@corr,X,Y},'type','per');
+    %[ci_r_boot] = bootci(B,{@corr,X,Y},'type','per', 'Options',statset('UseParallel',true) , "Alpha", a);
+    [ci_r_boot] = bootci(B,{@corr,X,Y},'type','per' , "Alpha", a);
     
     
     t = r * sqrt((n-2)/(1-r^2)) ;
@@ -77,19 +70,8 @@ function [ci_1, p_1, ci_2, p_2 , n] = Group1Exe4Fun1(X, Y)
     % find p using random permutation or randomization test
     
     r_values_bootstrap = NaN (B,1);
-    same_sample = [X Y] ;
-    for i=1:B
-        
-    % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        % The transpose is used to return a column vector so that X_boot and Y_boot are also column vectors
-        indexes = randperm(2*length(X))';
-        X_boot = same_sample(indexes(1:n));
-        Y_boot = same_sample(indexes(n+1:end));
-        
-    % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
-        % Which is the correct ? ?????????????????????????????????????
-        
+    for i=1:B
         % The transpose is used to return a column vector so that X_boot and Y_boot are also column vectors
         indexes = randperm(length(X))';
         X_boot = X(indexes);
@@ -102,28 +84,7 @@ function [ci_1, p_1, ci_2, p_2 , n] = Group1Exe4Fun1(X, Y)
     
        
     % Returns the p-value for the boostrap values (for 0 to be inside)
-    [~, p_bootstrap, ~] = Group1Exe3Fun2( r_values_bootstrap );
-    
-    
-    
-    % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Not used start ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    %     figure; 
-    %     histogram(r_values_bootstrap);
-    
-    r_values_bootstrap = sort([r_values_bootstrap ; 0 ] ); 
-    %     
-    %     figure; 
-    %     plot(1:B+1,r_values_bootstrap);
-    
-    index_first = find( r_values_bootstrap == 0 , 1 , "first");
-    index_last  = find( r_values_bootstrap == 0 , 1 , "last");
-    
-    final = (mean([index_first index_last]) );
-    final2 = abs(length(r_values_bootstrap)/2 - final );
-    final3 = round( abs(length(r_values_bootstrap)/2 - final ));
-    p_boot_new_way = 1 -  final3 * 2 / length(r_values_bootstrap) ;
-    
-    % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Not used end ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    [~, p_bootstrap, ~] = Group1Exe3Fun2( r_values_bootstrap , r);
     
     
     ci_1 = ci_r_parametric;

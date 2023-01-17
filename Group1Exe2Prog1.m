@@ -56,22 +56,23 @@ for i = 2:10
     r1 = (m < ci1(1)) || (m > ci1(2));
     r2 = (m < ci2(1)) || (m > ci2(2));
 
-    bool = [ ""  "not " ];
+    bool = [ ""  "NOT " ];
     
     % Print results
     fprintf("\n%s\n", table.Properties.VariableNames{i})
     fprintf("Parametric ci: [%f, %f]\n", ci1(1), ci1(2));
     fprintf("Bootstrap  ci: [%f, %f]\n", ci2(1), ci2(2));
-    fprintf("Mean: %f\n", m);
-    fprintf("Mean for the first period is %sinside the parametric ci.\n" , bool(r1+1));
-    fprintf("Mean for the first period is %sinside the bootrstrap ci.\n" , bool(r2+1));
-
-    % Print remarks about significant differences:
-    % If mean was not in ci
-    if (r1 || r2)
-        fprintf("!! Mean outside of confidence interval !!\n");
+    fprintf("First period mean: %f\n", m);
+    if ( ~isnan(m) ) 
+        fprintf("First period mean for the first period is %sinside the parametric ci.\n" , bool(r1+1));
+        fprintf("First period mean for the first period is %sinside the bootrstrap ci.\n" , bool(r2+1));
+   
+        % Print remarks about significant differences:
+        % If mean was not in ci
+        if (r1 || r2)
+            fprintf("!! Mean outside of confidence interval !!\n");
+        end
     end
-    
     
     % If there is large deviation in the two ci
     threshhold = 0.9 ;

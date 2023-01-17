@@ -27,7 +27,7 @@ pairs = nchoosek(2:10, 2);
 
 fancy_scatter_plots = [ 6     8    15    17    19    20    21    23    26    30    33 ] ;
 
-
+tic
 for i = 1 : length(fancy_scatter_plots) 
     
     index_in_pairs = fancy_scatter_plots(i);
@@ -73,7 +73,10 @@ for i = 1 : length(fancy_scatter_plots)
 %     title(text);
 
 end
-    
+  
+
+fprintf("\n" );  
+toc
 
 
 

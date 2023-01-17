@@ -40,15 +40,8 @@ for i = 2:numel(Names)
     h_result_string = [ "accepted" "rejected" ] ;
 
     fprintf("The data were interperted as %s \n" , type(discrete+1) );
-    fprintf("The p-value for %s is %f and for %s is %f \n" , distrobution_names(discrete+1 , 1 ) , p_1  ,distrobution_names(discrete+1 , 2 ) , p_2 );
+    fprintf("The p-value for %s is %5g and for %s is %5g \n" , distrobution_names(discrete+1 , 1 ) , p_1  ,distrobution_names(discrete+1 , 2 ) , p_2 );
     fprintf("The %s distribution is %s and the %s distribution is %s \n" , distrobution_names(discrete+1 , 1 ) , h_result_string(h_1+1)  ,distrobution_names(discrete+1 , 2 ) , h_result_string(h_2+1)  );
-    
-    [~, index] = max([p_1 p_2]);
-    if ( ~h_1 || ~h_2 ) 
-        fprintf("The %s distribution is chosen because it has the bigger p-value \n" , distrobution_names(discrete+1 , index ) );
-    else
-        fprintf("None of the distributions fit the data \n" )
-    end
     
     fprintf("\n");
 end

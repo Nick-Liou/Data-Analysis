@@ -5,8 +5,8 @@ function [p_parametric, p_bootstrap] = Group1Exe3Fun1(X_Year, X)
     
     arguments
         % Make inputs a row vector
-        X_Year (1,:)	{mustBeNumeric}
-        X (1,:)	{mustBeNumeric} 
+        X_Year  (1,:)	{mustBeNumeric}
+        X       (1,:)	{mustBeNumeric} 
     end
     
     % Check inputs have the same size
@@ -32,7 +32,8 @@ function [p_parametric, p_bootstrap] = Group1Exe3Fun1(X_Year, X)
     % If all of them are NaN RIP and return NaN
     if( isempty(X1) || isempty(X2))
         p_parametric = NaN;
-        p_bootstrap  = NaN;
+        p_bootstrap  = NaN;        
+        warning("One of the vectors after the split is empty (or has only Nan). (Return values are NaN)");
         return
     end
     
@@ -41,8 +42,8 @@ function [p_parametric, p_bootstrap] = Group1Exe3Fun1(X_Year, X)
     
     % Do permutation method (with replacement)
     B = 1000;
-    means1 = bootstrp(B, @mean, X1);
-    means2 = bootstrp(B, @mean, X2);
+    means1 = bootstrp(B, @mean, X1,'Options',statset('UseParallel',true));
+    means2 = bootstrp(B, @mean, X2,'Options',statset('UseParallel',true));
     stat = means2-means1;
     
     

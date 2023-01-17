@@ -118,6 +118,12 @@ function [  mdl ,mdl2 , mdl3 ] = Group1Exe9Fun1(X, Y , names)
     % explained == 100* latent / sum(latent) 
     % X*coeff == score 
     
+%     figure;
+%     plot(1:length(explained) , cumsum(explained));
+%     hold on ;
+%     plot(1:length(explained) , explained);
+%     
+%     stepwise(score,Y);
     
     % Choose k based on percentage of variance explained
     threshold = 0.95; % Set the threshold for explained variance
@@ -126,6 +132,7 @@ function [  mdl ,mdl2 , mdl3 ] = Group1Exe9Fun1(X, Y , names)
     
     d_reduced_X = score(:,1:k);
   
+    
     
     mdl = fitlm(d_reduced_X,Y);
     mdl3 = mdl ;

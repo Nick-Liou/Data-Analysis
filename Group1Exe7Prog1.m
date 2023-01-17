@@ -28,6 +28,7 @@ first = true ;
 
 adj_r_squared_best = zeros(length(dependent_id),length(independent_id));
 
+tic
 for i=1:length(dependent_id)
     element_dependent = Names{dependent_id(i)};
     % Create a figure
@@ -81,14 +82,14 @@ for i=1:length(dependent_id)
     
 end
 
+toc
 
-% None of the criteria can explain FG (have a very high adjR^2) 
+% None of the criteria can explain FG very well (have a very high adjR^2) 
 % The one with the best adjR^2 is 0.349 for the criteria RA with a second degree polynomial model  y = ax^2 + bx + c
 
 % Also note that for the criteria SN the adjR^2 is zero
 % This means that the best model is the mean value 
-
-% Also this means that all the other adjR^2 are negative!
+% Also this means that all the other adjR^2 are negative in this case!
 % which is normal since even though it is called adjR^2 is isn't strictly positive
 % when the squared errors are greater than the the squared errors of the mean 
 % this can happen or even if they are equal but k is greater than 0.

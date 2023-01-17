@@ -28,6 +28,7 @@ function [ I_X_comma_Y  ] = Group1Exe5Fun2(X, Y)
             
     H_XY = - sum( prob_XY.*log2( prob_XY ) );
     
+    % Since it is log2 the return value is in bits
     I_X_comma_Y = H_X + H_Y - H_XY ;
     
 
