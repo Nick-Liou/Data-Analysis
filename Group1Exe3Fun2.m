@@ -64,3 +64,47 @@ function [h, p_value, ci] = Group1Exe3Fun2( boostrap_values , test_value , optio
     
 end
 
+% A song about boostrap by ChatGPT
+
+% Verse 1:
+% Bootstrap, bootstrap, we'll use it with pride,
+% A powerful method, for statistics inside.
+% We'll take samples, with replacement in mind,
+% And use them to estimate, what we hope to find.
+% 
+% Chorus:
+% Bootstrap, bootstrap, it's the way to go,
+% With this method, our uncertainty will never show.
+% We'll use it for confidence intervals,
+% And to make inferences, that are never dull.
+% 
+% Verse 2:
+% We'll use the power of bootstrap,
+% To estimate population statistics.
+% We'll use it for hypothesis testing,
+% And to make sure our results are never guessing.
+% 
+% Chorus:
+% Bootstrap, bootstrap, it's the way to go,
+% With this method, our uncertainty will never show.
+% We'll use it for confidence intervals,
+% And to make inferences, that are never dull.
+% 
+% Bridge:
+% We'll use it for data that's not normal,
+% And for data that's hard to transform.
+% With bootstrap, we'll never be stuck,
+% We'll find the truth, with just a little luck.
+% 
+% Chorus:
+% Bootstrap, bootstrap, it's the way to go,
+% With this method, our uncertainty will never show.
+% We'll use it for confidence intervals,
+% And to make inferences, that are never dull.
+% 
+% Outro:
+% Bootstrap, bootstrap, we'll use it with pride,
+% A powerful method, for statistics inside.
+% With this method, we'll find the truth,
+% And make sure our results are never uncouth.
+
