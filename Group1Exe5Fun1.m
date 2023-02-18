@@ -29,6 +29,8 @@ function [ I_XY , p_value_boot , n  ] = Group1Exe5Fun1(X, Y )
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Discritize tests 
+    % Here we messes around with differend discritization methods
+    
 %     X = 100*rand(10,1)-50
 %     
 %      number_of_groups = 5 ;

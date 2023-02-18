@@ -53,9 +53,9 @@ function [  mdl ,mdl2 , mdl3 ] = Group1Exe9Fun1(X, Y , names)
     r = mdl.Residuals.Raw ;  % (Y- y_tilde  ) == r
     Error_var = var(r) ; 
 
-   
+   % Not need cause we get those from the model above 
 %     y_tilde = [ones(n,1) X] * p  ;
-    % (Y- y_tilde  ) == r
+%     (Y- y_tilde  ) == r
     
 %     k = length(p)-1 ;    
     

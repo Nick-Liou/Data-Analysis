@@ -78,6 +78,7 @@ fprintf('\n');
 
 
 
+% Attempt to parallelize it 
     
 % for dependent_index = 1 : length(dependent_id)
 % 
