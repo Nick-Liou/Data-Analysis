@@ -23,6 +23,7 @@ function [ R_max , best_model_name  ] = Group1Exe7Fun1(X, Y)
     
     n = length(X) ;
     
+    Xmin = min(X) + 1 ;
         
     % Those models are implemented :
     % model 1 : y = ax + b
@@ -32,6 +33,7 @@ function [ R_max , best_model_name  ] = Group1Exe7Fun1(X, Y)
     % model 5 : y = ax^b 
     % model 6 : y = a + blog(x)
     % model 7 : y = a + b/x
+    % model 8 : y = a
     
     number_of_models = 8 ;
     f_models = cell(3,number_of_models) ;    
@@ -66,19 +68,22 @@ function [ R_max , best_model_name  ] = Group1Exe7Fun1(X, Y)
     f_models{2,4} = @(p,X) exp(p(2) + p(1) * X) ;
     f_models{3,4} = "$y = ae^{bx}$" ;
     
+    
     % y = ax^b 
-    f_models{1,5} = @(X,Y) [log(Y) log(X) ones(length(X),1)];
-    f_models{2,5} = @(p,X) exp(p(2)) * X.^p(1) ;
+    f_models{1,5} = @(X,Y) [log(Y) log(X+Xmin) ones(length(X),1)];
+    f_models{2,5} = @(p,X) exp(p(2)) * (X+Xmin).^p(1) ;
     f_models{3,5} = "$y = ax^b $" ;
     
-    % y = a + blog(x)
-    f_models{1,6} = @(X,Y) [Y log(X) ones(length(X),1)];
-    f_models{2,6} = @(p,X) p(1)*log(X)+p(2) ;
-    f_models{3,6} = "$y = a + b\cdot ln(x)$" ;
     
-    % y = a + b/x
-    f_models{1,7} = @(X,Y) [Y 1./X ones(length(X),1)];
-    f_models{2,7} = @(p,X) p(1)./X+p(2) ;
+    % y = a + blog(x)   
+    f_models{1,6} = @(X,Y) [Y log(X + Xmin ) ones(length(X),1)];
+    f_models{2,6} = @(p,X) p(1)*log(X + Xmin )+p(2) ;
+    f_models{3,6} = "$y = a + b\cdot ln(x)$" ;
+   
+    
+     % y = a + b/x  
+    f_models{1,7} = @(X,Y) [Y 1./(X+Xmin) ones(length(X),1)];
+    f_models{2,7} = @(p,X) p(1)./(X+Xmin)+p(2) ;
     f_models{3,7} = "$y = a + \frac{b}{x}$" ;
     
     % Extra the mean 
@@ -89,20 +94,18 @@ function [ R_max , best_model_name  ] = Group1Exe7Fun1(X, Y)
     
     
     p_cell_coefficients = cell(1,number_of_models) ;
-    
+
     % Fit the models to X,Y using 
     for i = 1:number_of_models        
         Y_X_input = f_models{1,i}( X , Y ) ;
-        %Y_X_input = Y_X_input( isfinite(Y_X_input) );  %%%%%%%%%%%%%%
-        Y_X_input(any(isinf(Y_X_input), 2), :) = [];
+        
         Y_input = Y_X_input(:,1);
         X_input = Y_X_input(:,2:end);
-        p_cell_coefficients{i} = regress( Y_input, X_input	) ;
+        p_cell_coefficients{i} = regress( Y_input, X_input	)  ;
         
         
     end
     
-    %adjusted_R_squared = 1 ; 
     
     k = cellfun(@length,p_cell_coefficients) - 1 ;
     
